@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - name: node
+        image: DOCKER_USER/attendance-node:BUILD_NUMBER
+        env:
+          - name: SECRET
+            value: secret
+          - name: POSTGRES_URI
+            value: postgres://user:pass@postgres:5432/db
+        ports:
+          - name: http-port
+            containerPort: 4000
